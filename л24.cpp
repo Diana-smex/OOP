@@ -25,7 +25,7 @@ public:
 		x = xVal;
 		cout << "[Point] Х установлен в " << x << endl;
 	}
-	void sety(int yVal) {
+	void setY(int yVal) {
 		y = yVal;
 		cout << "[Point] Y установлен в " << y << endl;
 	}
@@ -148,3 +148,56 @@ public:
         return width * height;
     }
 };
+int main() {
+    setlocale(LC_ALL, "Russian");
+    cout << "=== начало лабораторной 2 ===" << endl << endl;
+    cout << "--- Ттестирование класса Point ---" << endl;
+    Point p1;                         
+    Point p2(5, 10);                   
+    Point p3 = p2;                    
+
+    p1.setX(3);
+    p1.setY(7);
+    cout << "p1: "; p1.print(); cout << endl;
+    p1.move(2, -1);                    
+    cout << endl;
+    cout << "--- Тестирование класса Line ---" << endl;
+    Line line1;                       
+    Line line2(p1, p2);                
+    Line line3(1, 1, 4, 5);            
+
+    line1.print();
+    line2.setColor("red");
+    line2.print();
+    line2.move(1, 1);                  
+    cout << "Длина line3: " << line3.getLength() << endl;
+
+    cout << endl;
+    cout << "--- Тестирование класса Rectangle ---" << endl;
+    Rectangle rect1;                  
+    Rectangle rect2(Point(2, 3), 6, 4); 
+    rect1.print();
+    rect2.setFillColor("blue");
+    rect2.setBorderColor("green");
+    rect2.print();
+    rect2.move(2, -1);                 
+    cout << "Площадь rect2: " << rect2.getArea() << endl;
+
+    cout << endl;
+
+    cout << "--- Динамические объекты ---" << endl;
+    Point* dynamicPoint = new Point(100, 200);
+    Line* dynamicLine = new Line(0, 0, 10, 10);
+    dynamicPoint->print(); cout << endl;
+    dynamicLine->print();
+    delete dynamicPoint;               
+    delete dynamicLine;
+    cout << endl;
+    cout << "--- Композиция и вложенность ---" << endl;
+    Rectangle complexRect(Point(1, 1), 8, 6);
+    complexRect.setBorderColor("yellow");
+    complexRect.print();
+    cout << endl;
+    cout << "=== Конец лабораторной работы 2 ===" << endl;
+    return 0;
+}
