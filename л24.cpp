@@ -148,6 +148,56 @@ public:
         return width * height;
     }
 };
+class Shape {
+protected:
+    string name;
+public:
+    Shape(string n) : name(n) {
+        cout << "[Shape] Конструктор " << name << endl;
+    }
+    virtual ~Shape() {
+        cout << "[Shape] Деструктор " << name << endl;
+    }
+    virtual void draw() {
+        cout << "[Shape] Рисуем " << name << endl;
+    }
+};
+
+class Circle : public Shape {
+private:
+    Point center;
+    int radius;
+public:
+    Circle(Point c, int r) : Shape("Circle"), center(c), radius(r) {
+        cout << "[Circle] Конструктор с параметрами" << endl;
+    }
+    ~Circle() {
+        cout << "[Circle] Деструктор" << endl;
+    }
+    void draw() override {
+        cout << "[Circle] Рисуем круг с центром ";
+        center.print();
+        cout << " и радиусом " << radius << endl;
+    }
+};
+
+class Square : public Shape {
+private:
+    Point topLeft;
+    int size;
+public:
+    Square(Point tl, int s) : Shape("Square"), topLeft(tl), size(s) {
+        cout << "[Square] Конструктор с параметрами" << endl;
+    }
+    ~Square() {
+        cout << "[Square] Деструктор" << endl;
+    }
+    void draw() override {
+        cout << "[Square] Рисуем квадрат в ";
+        topLeft.print();
+        cout << " размером " << size << endl;
+    }
+};
 int main() {
     setlocale(LC_ALL, "Russian");
     cout << "=== начало лабораторной 2 ===" << endl << endl;
@@ -197,6 +247,28 @@ int main() {
     Rectangle complexRect(Point(1, 1), 8, 6);
     complexRect.setBorderColor("yellow");
     complexRect.print();
+    cout << endl;
+    cout << "--- НАСЛЕДОВАНИЕ И ПОЛИМОРФИЗМ ---" << endl;
+
+    cout << "--- Создание Circle: ---" << endl;
+    Circle circle(Point(2, 2), 5);
+    circle.draw();
+
+    cout << "\n--- Создание Square: ---" << endl;
+    Square square(Point(1, 1), 4);
+    square.draw();
+
+    cout << "\n--- ПОЛИМОРФИЗМ - работа через указатель базового класса: ---" << endl;
+    Shape* shape1 = new Circle(Point(3, 3), 6);
+    Shape* shape2 = new Square(Point(4, 4), 3);
+
+    cout << "--- Вызов виртуальных методов через указатели:--- " << endl;
+    shape1->draw(); 
+    shape2->draw();
+
+    cout << "\n--- Удаление через указатель базового класса: ---" << endl;
+    delete shape1;
+    delete shape2;
     cout << endl;
     cout << "=== Конец лабораторной работы 2 ===" << endl;
     return 0;
